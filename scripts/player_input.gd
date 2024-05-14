@@ -6,6 +6,7 @@ extends MultiplayerSynchronizer
 # Synchronized property.
 @export var direction := Vector2()
 
+
 func _ready():
 	# Only process for the local player
 	set_process(get_multiplayer_authority() == multiplayer.get_unique_id())
@@ -14,6 +15,7 @@ func _ready():
 @rpc("call_local")
 func jump():
 	jumping = true
+
 
 func _process(delta):
 	# Get the input direction and handle the movement/deceleration.

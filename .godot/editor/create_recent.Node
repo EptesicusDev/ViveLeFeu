@@ -1,8 +1,10 @@
-Label
-Camera2D
 Sprite2D
-CollisionShape2D
 CharacterBody2D
+CharacterBody3D
+Camera2D
+Node
+Label
+CollisionShape2D
 Node2D
 LineEdit
 AnimationPlayer

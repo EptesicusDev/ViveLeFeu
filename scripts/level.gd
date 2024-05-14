@@ -1,4 +1,4 @@
-extends Node3D
+extends Node
 
 const SPAWN_RANDOM := 5.0
 
@@ -32,7 +32,7 @@ func add_player(id: int):
 	character.player = id
 	# Randomize character position.
 	var pos := Vector2.from_angle(randf() * 2 * PI)
-	character.position = Vector3(pos.x * SPAWN_RANDOM * randf(), 10, pos.y * SPAWN_RANDOM * randf())
+	character.position = Vector2(pos.x * SPAWN_RANDOM * randf(), pos.y * SPAWN_RANDOM * randf())
 	character.name = str(id)
 	$Players.add_child(character, true)
 

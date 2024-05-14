@@ -1,4 +1,4 @@
-extends CharacterBody3D
+extends CharacterBody2D
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -15,18 +15,19 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 # Player synchronized input.
 @onready var input = $PlayerInput
+@onready var camera = $Camera2D
 
 func _ready():
 	# Set the camera as current if we are this player.
 	if player == multiplayer.get_unique_id():
-		$Camera3D.current = true
+		camera.enabled = true
 	# Only process on server.
 	# EDIT: Left the client simulate player movement too to compesate network latency.
 	# set_physics_process(multiplayer.is_server())
 
 
-func _physics_process(delta):
-	# Add the gravity.
+func _physics_process(_delta):
+	'''# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
@@ -36,14 +37,14 @@ func _physics_process(delta):
 
 	# Reset jump state.
 	input.jumping = false
-
+	'''
 	# Handle movement.
-	var direction = (transform.basis * Vector3(input.direction.x, 0, input.direction.y)).normalized()
+	var direction = Vector2(input.direction.x, input.direction.y).normalized()
 	if direction:
 		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+		velocity.y = direction.y * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		velocity.y = move_toward(velocity.y, 0, SPEED)
 
 	move_and_slide()

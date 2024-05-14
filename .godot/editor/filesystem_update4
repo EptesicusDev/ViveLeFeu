@@ -1,5 +1,5 @@
-res://player.tscn
-res://scripts/player.gd
 res://level.tscn
+res://player.tscn
 res://scripts/level.gd
+res://scripts/player.gd
 res://scripts/player_input.gd
