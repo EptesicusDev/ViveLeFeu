@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://efwjm4hfeqf2"]
+[gd_scene load_steps=3 format=3 uid="uid://efwjm4hfeqf2"]
 
-[ext_resource type="Script" path="res://scripts/level.gd" id="1_p4gvl"]
+[ext_resource type="Script" path="res://scripts/level/level.gd" id="1_p4gvl"]
+[ext_resource type="Texture2D" uid="uid://cboqwj1gv3yh2" path="res://assets/world/test_area/area_test.png" id="2_tbf02"]
 
 [node name="World" type="Node"]
 script = ExtResource("1_p4gvl")
@@ -11,3 +12,13 @@ script = ExtResource("1_p4gvl")
 _spawnable_scenes = PackedStringArray("res://player.tscn")
 spawn_path = NodePath("../Players")
 spawn_limit = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+texture = ExtResource("2_tbf02")
+
+[node name="Collisions" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions"]
+polygon = PackedVector2Array(-116, 4, -134, -10, -134, -40, -116, -55, 128, -55, 128, 4, 17, 4, 17, -42, 36, -42, 36, -52, -117, -52, -117, -42, 2, -42, 2, 4)

@@ -1,5 +1,6 @@
-res://level.tscn
 res://player.tscn
-res://scripts/level.gd
-res://scripts/player.gd
-res://scripts/player_input.gd
+res://scripts/player/player.gd
+res://scripts/state/player_states/idle.gd
+res://scripts/state/player_states/run.gd
+res://scripts/state/state.gd
+res://level.tscn
