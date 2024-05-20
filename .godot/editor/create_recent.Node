@@ -1,3 +1,7 @@
+VSeparator
+VBoxContainer
+HBoxContainer
+HSeparator
 CollisionPolygon2D
 StaticBody2D
 Sprite2D
@@ -9,7 +13,3 @@ StateMachine
 Node
 CollisionShape2D
 Label
-CharacterBody2D
-CharacterBody3D
-Camera2D
-Node2D

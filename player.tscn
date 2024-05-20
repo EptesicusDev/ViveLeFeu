@@ -307,6 +307,7 @@ initial_state = NodePath("Idle")
 
 [node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree", "player", "synchronized_input")]
 script = ExtResource("5_i0c7g")
+friction = 375.0
 animation_tree = NodePath("../../AnimationTree")
 player = NodePath("../..")
 animation_name = "Idle"
@@ -314,6 +315,8 @@ synchronized_input = NodePath("../../PlayerInput")
 
 [node name="Run" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree", "player", "synchronized_input")]
 script = ExtResource("6_mlet2")
+speed = 60.0
+acceleration = 300.0
 animation_tree = NodePath("../../AnimationTree")
 player = NodePath("../..")
 animation_name = "Run"

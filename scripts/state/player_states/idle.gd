@@ -14,9 +14,9 @@ func update() -> void:
 	pass
 
 
-func physics_update() -> void:
+func physics_update(delta: float) -> void:
 	if(player):
-		player.velocity = player.velocity.move_toward(Vector2.ZERO, friction)
+		player.velocity = player.velocity.move_toward(Vector2.ZERO, friction * delta)
 
 
 func exit() -> void:

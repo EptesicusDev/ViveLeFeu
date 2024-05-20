@@ -1,6 +1,10 @@
 res://player.tscn
+res://level.tscn
 res://scripts/player/player.gd
-res://scripts/state/player_states/idle.gd
 res://scripts/state/player_states/run.gd
 res://scripts/state/state.gd
-res://level.tscn
+res://scripts/state/player_states/idle.gd
+res://scripts/state/state_machine.gd
+res://scripts/player/player_input.gd
+res://multiplayer.tscn
+res://scripts/multiplayer/multiplayer.gd

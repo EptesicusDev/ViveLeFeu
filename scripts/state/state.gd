@@ -23,7 +23,7 @@ func update() -> void:
 
 
 # Virtual function. Corresponds to the `_physics_process()` callback.
-func physics_update() -> void:
+func physics_update(_delta: float) -> void:
 	pass
 
 

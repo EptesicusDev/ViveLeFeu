@@ -8,7 +8,6 @@ func _ready():
 	get_tree().paused = true
 	# You can save bandwith by disabling server relay and peer notifications.
 	multiplayer.server_relay = false
-
 	# Automatically start the server in headless mode.
 	if DisplayServer.get_name() == "headless":
 		print("Automatically starting dedicated server")
@@ -23,13 +22,13 @@ func _on_host_pressed():
 		OS.alert("Failed to start multiplayer server")
 		return
 	multiplayer.multiplayer_peer = peer
-	send_player_data(multiplayer.get_unique_id(), $UI/Net/Options/Name.text)
+	send_player_data(multiplayer.get_unique_id(), $UI/Net/Name.text)
 	start_game()
 
 
 func _on_connect_pressed():
 	# Start as client
-	var txt : String = $UI/Net/Options/Remote.text
+	var txt : String = $UI/Net/HBoxContainer/VBoxContainer/Remote.text
 	if txt == "":
 		OS.alert("Need a remote to connect to.")
 		return
@@ -41,9 +40,10 @@ func _on_connect_pressed():
 	multiplayer.multiplayer_peer = peer
 	start_game()
 
+
 func start_game():
 	# Hide the UI and unpause to start the game.
-	$UI.hide()
+	$UI/Net.hide()
 	get_tree().paused = false
 	# Only change level on the server.
 	# Clients will instantiate the level via the spawner.
@@ -60,6 +60,7 @@ func change_level(scene: PackedScene):
 		c.queue_free()
 	# Add new level.
 	level.add_child(scene.instantiate())
+
 
 # The server can restart the level by pressing HOME.
 func _input(event):
@@ -82,6 +83,5 @@ func send_player_data(id, ign):
 			send_player_data.rpc(current_id, PlayersManager.players[current_id].name)
 
 
-
 func connected_to_server():
-	send_player_data.rpc_id(1, multiplayer.get_unique_id(), $UI/Net/Options/Name.text)
+	send_player_data.rpc_id(1, multiplayer.get_unique_id(), $UI/Net/Name.text)

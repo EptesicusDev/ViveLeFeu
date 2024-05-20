@@ -15,7 +15,7 @@ func attack():
 	attacking = true
 
 
-func _process(delta):
+func _process(_delta):
 	# Get the input direction and handle the movement/deceleration.
 	direction = Input.get_vector("left", "right", "up", "down")
 	if(direction != Vector2.ZERO):

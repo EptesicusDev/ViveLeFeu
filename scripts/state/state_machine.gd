@@ -22,9 +22,9 @@ func _process(_delta: float) -> void:
 		current_state.update()
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if(current_state):
-		current_state.physics_update()
+		current_state.physics_update(delta)
 
 
 func on_state_transistion(state, new_state_name) -> void:
