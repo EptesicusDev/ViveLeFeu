@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://efwjm4hfeqf2"]
+[gd_scene load_steps=4 format=3 uid="uid://efwjm4hfeqf2"]
 
 [ext_resource type="Script" path="res://scripts/level/level.gd" id="1_p4gvl"]
 [ext_resource type="Texture2D" uid="uid://cboqwj1gv3yh2" path="res://assets/world/test_area/area_test.png" id="2_tbf02"]
+[ext_resource type="PackedScene" uid="uid://c78mrrt0vvi1u" path="res://staff_item.tscn" id="3_ij2m7"]
 
 [node name="World" type="Node"]
 script = ExtResource("1_p4gvl")
@@ -25,3 +26,5 @@ collision_mask = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions"]
 polygon = PackedVector2Array(-116, 4, -134, -10, -134, -40, -116, -55, 128, -55, 128, 4, 18, 4, 18, -42, 36, -42, 36, -52, -117, -52, -117, -42, 1, -42, 1, 4)
+
+[node name="StaffItem" parent="." instance=ExtResource("3_ij2m7")]

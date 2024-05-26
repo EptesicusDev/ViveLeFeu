@@ -12,6 +12,12 @@ enum PlayerStates {
 	ATTACK,
 }
 
+enum Actions {
+	NONE,
+	PICKUP,
+}
+
+
 # Set by the authority, synchronized on spawn.
 @export var player: int = 1 :
 	set(id):
@@ -23,6 +29,8 @@ enum PlayerStates {
 @onready var camera: Camera2D = $Camera2D
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var animation_state_machine = $AnimationTree["parameters/playback"]
+
+var nearest_staff: Staff = null
 
 
 func _ready() -> void:
@@ -36,6 +44,7 @@ func _ready() -> void:
 
 func _physics_process(delta) -> void:
 	var direction = Vector2(input.direction.x, input.direction.y).normalized()
+	# State machine
 	match(input.state):
 		PlayerStates.IDLE:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
@@ -50,7 +59,18 @@ func _physics_process(delta) -> void:
 
 		_:
 			pass
+
 	move_and_slide()
+	# Other actions
+	match (input.current_action):
+		Actions.PICKUP:
+			if(nearest_staff):
+				$Staff.visible = true
+				nearest_staff.queue_free()
+			input.current_action = Actions.NONE # Eat the action once it is done
+
+		_:
+			pass
 
 
 func _process(_delta):
@@ -72,3 +92,13 @@ func update_animation_tree_keyboard(vector: Vector2) -> void:
 	# Add each new animation with BlendSpace2D here
 	animation_tree.set("parameters/Idle/blend_position", vector)
 	animation_tree.set("parameters/Run/blend_position", vector)
+
+
+func _on_collision_scanner_body_entered(body):
+	if(body is Staff):
+		nearest_staff = body
+
+
+func _on_collision_scanner_body_exited(body):
+	if(body == nearest_staff):
+		nearest_staff = null

@@ -1,3 +1,7 @@
+Sprite2D
+CollisionShape2D
+Area2D
+StaticBody2D
 CanvasLayer
 Control
 ColorRect
@@ -8,8 +12,3 @@ VSeparator
 HBoxContainer
 HSeparator
 CollisionPolygon2D
-StaticBody2D
-Sprite2D
-Run
-AnimationTree
-AnimationPlayer
