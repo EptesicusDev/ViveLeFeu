@@ -1,8 +1,11 @@
-[gd_scene load_steps=31 format=3 uid="uid://cw8w6clmxedi6"]
+[gd_scene load_steps=34 format=3 uid="uid://cw8w6clmxedi6"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_516kg"]
 [ext_resource type="Script" path="res://scripts/player/player_input.gd" id="2_27fu1"]
 [ext_resource type="Texture2D" uid="uid://cfnte10rcxra6" path="res://assets/player/player_sp.png" id="3_8ciqx"]
+[ext_resource type="Script" path="res://scripts/state/state_machine.gd" id="4_ph6jp"]
+[ext_resource type="Script" path="res://scripts/state/player_states/idle.gd" id="5_i0c7g"]
+[ext_resource type="Script" path="res://scripts/state/player_states/run.gd" id="6_mlet2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a3s5y"]
 radius = 2.0
@@ -23,9 +26,6 @@ properties/2/replication_mode = 1
 properties/0/path = NodePath(".:direction")
 properties/0/spawn = false
 properties/0/replication_mode = 1
-properties/1/path = NodePath(".:state")
-properties/1/spawn = true
-properties/1/replication_mode = 1
 
 [sub_resource type="Theme" id="Theme_t4m1t"]
 Label/colors/font_color = Color(0, 1, 0.490196, 1)
@@ -265,26 +265,25 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(-80.974, 0)
 
 [node name="Player" type="CharacterBody2D"]
-z_index = 2
-y_sort_enabled = true
 script = ExtResource("1_516kg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 12)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_a3s5y")
 
 [node name="ServerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_fb1vy")
 
-[node name="PlayerInput" type="MultiplayerSynchronizer" parent="."]
+[node name="PlayerInput" type="MultiplayerSynchronizer" parent="." node_paths=PackedStringArray("state_machine")]
 root_path = NodePath(".")
 replication_config = SubResource("SceneReplicationConfig_hoavk")
 script = ExtResource("2_27fu1")
+state_machine = NodePath("../StateMachine")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("3_8ciqx")
-offset = Vector2(0, -12)
 hframes = 12
 vframes = 11
 
@@ -295,12 +294,33 @@ enabled = false
 visible = false
 z_index = 10
 offset_left = -19.0
-offset_top = -50.0
+offset_top = -37.0
 offset_right = 21.0
-offset_bottom = -27.0
+offset_bottom = -14.0
 theme = SubResource("Theme_t4m1t")
 text = "."
 horizontal_alignment = 1
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("4_ph6jp")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree", "player", "synchronized_input")]
+script = ExtResource("5_i0c7g")
+friction = 375.0
+animation_tree = NodePath("../../AnimationTree")
+player = NodePath("../..")
+animation_name = "Idle"
+synchronized_input = NodePath("../../PlayerInput")
+
+[node name="Run" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree", "player", "synchronized_input")]
+script = ExtResource("6_mlet2")
+speed = 60.0
+acceleration = 300.0
+animation_tree = NodePath("../../AnimationTree")
+player = NodePath("../..")
+animation_name = "Run"
+synchronized_input = NodePath("../../PlayerInput")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

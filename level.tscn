@@ -6,7 +6,10 @@
 [node name="World" type="Node"]
 script = ExtResource("1_p4gvl")
 
-[node name="Players" type="Node" parent="."]
+[node name="Players" type="Node2D" parent="."]
+z_index = 2
+z_as_relative = false
+y_sort_enabled = true
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://player.tscn")

@@ -14,8 +14,18 @@ func _ready():
 		_on_host_pressed.call_deferred()
 
 
+# The server can restart the level by pressing HOME.
+func _input(event):
+	if(event.is_action("escape") and Input.is_action_just_pressed("escape")):
+		$UI/Pause.visible = true
+	# Only host can trigger what is bellow this
+	if(not multiplayer.is_server()):
+		return
+	if(event.is_action("home") and Input.is_action_just_pressed("home")):
+		change_level.call_deferred(load("res://level.tscn"))
+
+
 func _on_host_pressed():
-	# Start as server
 	var peer = ENetMultiplayerPeer.new()
 	peer.create_server(PORT)
 	if peer.get_connection_status() == MultiplayerPeer.CONNECTION_DISCONNECTED:
@@ -27,13 +37,12 @@ func _on_host_pressed():
 
 
 func _on_connect_pressed():
-	# Start as client
-	var txt : String = $UI/Net/HBoxContainer/VBoxContainer/Remote.text
-	if txt == "":
+	var ip : String = $UI/Net/HBoxContainer/VBoxContainer/Remote.text
+	if ip == "":
 		OS.alert("Need a remote to connect to.")
 		return
 	var peer = ENetMultiplayerPeer.new()
-	peer.create_client(txt, PORT)
+	peer.create_client(ip, PORT)
 	if peer.get_connection_status() == MultiplayerPeer.CONNECTION_DISCONNECTED:
 		OS.alert("Failed to start multiplayer client")
 		return
@@ -42,7 +51,6 @@ func _on_connect_pressed():
 
 
 func start_game():
-	# Hide the UI and unpause to start the game.
 	$UI/Net.hide()
 	get_tree().paused = false
 	# Only change level on the server.
@@ -62,14 +70,6 @@ func change_level(scene: PackedScene):
 	level.add_child(scene.instantiate())
 
 
-# The server can restart the level by pressing HOME.
-func _input(event):
-	if not multiplayer.is_server():
-		return
-	if event.is_action("ui_home") and Input.is_action_just_pressed("ui_home"):
-		change_level.call_deferred(load("res://level.tscn"))
-
-
 @rpc("any_peer")
 func send_player_data(id, ign):
 	if(!PlayersManager.players.has(id)):
@@ -78,10 +78,22 @@ func send_player_data(id, ign):
 			"name" : ign
 		}
 	if(multiplayer.is_server()):
-		# registering every players
+		# Registering every players
 		for current_id in PlayersManager.players:
 			send_player_data.rpc(current_id, PlayersManager.players[current_id].name)
 
 
 func connected_to_server():
 	send_player_data.rpc_id(1, multiplayer.get_unique_id(), $UI/Net/Name.text)
+
+
+func _on_resume_pressed():
+	$UI/Pause.visible = false
+
+
+func _on_back_pressed():
+	get_tree().reload_current_scene()
+
+
+func _on_quit_pressed():
+	get_tree().quit()
