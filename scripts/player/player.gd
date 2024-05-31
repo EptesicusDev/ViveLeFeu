@@ -34,6 +34,7 @@ var nearest_staff: Staff = null
 
 
 func _ready() -> void:
+	$AnimationTree.active = true
 	if(player == multiplayer.get_unique_id()):
 		camera.enabled = true
 		$Label.visible = true
@@ -65,6 +66,7 @@ func _physics_process(delta) -> void:
 	match (input.current_action):
 		Actions.PICKUP:
 			if(nearest_staff):
+				$Staff.self_modulate = nearest_staff.color
 				$Staff.visible = true
 				nearest_staff.queue_free()
 			input.current_action = Actions.NONE # Eat the action once it is done

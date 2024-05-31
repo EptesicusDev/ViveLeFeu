@@ -1,7 +1,3 @@
 res://player.tscn
-res://multiplayer.tscn
-res://staff_item.tscn
-res://scripts/staff_item/staff_item.gd
-res://level.tscn
-res://scripts/player/player_input.gd
 res://scripts/player/player.gd
+res://level.tscn
