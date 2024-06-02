@@ -1,3 +1,4 @@
+res://multiplayer.tscn
+res://scripts/multiplayer/multiplayer.gd
 res://player.tscn
 res://scripts/player/player.gd
-res://level.tscn

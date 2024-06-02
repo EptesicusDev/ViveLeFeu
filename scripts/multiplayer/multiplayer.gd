@@ -4,6 +4,7 @@ const PORT = 4433
 
 func _ready():
 	multiplayer.connected_to_server.connect(connected_to_server)
+	multiplayer.peer_disconnected.connect(peer_disconnected_func)
 	# Start paused
 	get_tree().paused = true
 	# You can save bandwith by disabling server relay and peer notifications.
@@ -17,7 +18,15 @@ func _ready():
 # The server can restart the level by pressing HOME.
 func _input(event):
 	if(event.is_action("escape") and Input.is_action_just_pressed("escape")):
-		$UI/Pause.visible = true
+		$UI/CanvasLayer/Pause.visible = true
+		$UI/CanvasLayer.visible = true
+	if(event.is_action("player_list") and Input.is_action_just_pressed("player_list")):
+		# TODO update players ping
+		$UI/CanvasLayer/PlayerList.visible = true
+		$UI/CanvasLayer.visible = true
+	if(event.is_action("player_list") and Input.is_action_just_released("player_list")):
+		$UI/CanvasLayer/PlayerList.visible = false
+		$UI/CanvasLayer.visible = false
 	# Only host can trigger what is bellow this
 	if(not multiplayer.is_server()):
 		return
@@ -73,9 +82,20 @@ func change_level(scene: PackedScene):
 @rpc("any_peer")
 func send_player_data(id, ign):
 	if(!PlayersManager.players.has(id)):
+		# add player to list of player
+		var name_label = Label.new()
+		name_label.text = ign
+		var ping_label = Label.new()
+		ping_label.text = "0"
+		var container = HBoxContainer.new()
+		container.name = str(id)
+		container.add_child(name_label)
+		container.add_child(ping_label)
+		$UI/CanvasLayer/PlayerList.add_child(container)
 		PlayersManager.players[id] = {
 			"id" : id,
-			"name" : ign
+			"name" : ign,
+			"ping" : 0,
 		}
 	if(multiplayer.is_server()):
 		# Registering every players
@@ -87,8 +107,17 @@ func connected_to_server():
 	send_player_data.rpc_id(1, multiplayer.get_unique_id(), $UI/Net/Name.text)
 
 
+# signal is emitted on every remaining peer when one disconnects
+func peer_disconnected_func(id):
+	# remove player from player list
+	for child in $UI/CanvasLayer/PlayerList.get_children():
+		if(child.name == str(id)):
+			child.queue_free()
+
+
 func _on_resume_pressed():
-	$UI/Pause.visible = false
+	$UI/CanvasLayer/Pause.visible = false
+	$UI/CanvasLayer.visible = false
 
 
 func _on_back_pressed():

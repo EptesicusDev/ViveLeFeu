@@ -1,3 +1,7 @@
+HSeparator
+HBoxContainer
+Label
+VBoxContainer
 Sprite2D
 CollisionShape2D
 Area2D
@@ -6,9 +10,5 @@ CanvasLayer
 Control
 ColorRect
 Button
-VBoxContainer
 Node2D
 VSeparator
-HBoxContainer
-HSeparator
-CollisionPolygon2D

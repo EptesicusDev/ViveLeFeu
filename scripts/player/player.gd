@@ -37,7 +37,7 @@ func _ready() -> void:
 	$AnimationTree.active = true
 	if(player == multiplayer.get_unique_id()):
 		camera.enabled = true
-		$Label.visible = true
+		# $Label.visible = true
 	# Only process on server.
 	# EDIT: Left the client simulate player movement too to compesate network latency.
 	# set_physics_process(multiplayer.is_server())
