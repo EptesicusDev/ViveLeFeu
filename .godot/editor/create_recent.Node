@@ -1,3 +1,7 @@
+Button
+AnimationPlayer
+CanvasModulate
+WorldEnvironment
 HSeparator
 HBoxContainer
 Label
@@ -9,6 +13,3 @@ StaticBody2D
 CanvasLayer
 Control
 ColorRect
-Button
-Node2D
-VSeparator

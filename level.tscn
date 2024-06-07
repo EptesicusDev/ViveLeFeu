@@ -1,8 +1,46 @@
-[gd_scene load_steps=4 format=3 uid="uid://efwjm4hfeqf2"]
+[gd_scene load_steps=7 format=3 uid="uid://efwjm4hfeqf2"]
 
 [ext_resource type="Script" path="res://scripts/level/level.gd" id="1_p4gvl"]
 [ext_resource type="Texture2D" uid="uid://cboqwj1gv3yh2" path="res://assets/world/test_area/area_test.png" id="2_tbf02"]
 [ext_resource type="PackedScene" uid="uid://c78mrrt0vvi1u" path="res://staff_item.tscn" id="3_ij2m7"]
+
+[sub_resource type="Animation" id="Animation_vqupe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.133333, 0.141176, 0.258824, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mbcnn"]
+resource_name = "day_night"
+length = 180.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 35.1, 90.1, 150.1, 180),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.133333, 0.141176, 0.258824, 1), Color(0.964706, 0.682353, 0.627451, 1), Color(1, 1, 1, 1), Color(1, 0.247059, 0.282353, 1), Color(0.133333, 0.141176, 0.258824, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gxbli"]
+_data = {
+"RESET": SubResource("Animation_vqupe"),
+"day_night": SubResource("Animation_mbcnn")
+}
 
 [node name="World" type="Node"]
 script = ExtResource("1_p4gvl")
@@ -30,3 +68,12 @@ polygon = PackedVector2Array(-116, 4, -134, -10, -134, -40, -116, -55, 128, -55,
 [node name="StaffItem" parent="." instance=ExtResource("3_ij2m7")]
 position = Vector2(148, 69)
 color = Color(0, 1, 0.243137, 1)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.133333, 0.141176, 0.258824, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasModulate"]
+libraries = {
+"": SubResource("AnimationLibrary_gxbli")
+}
+autoplay = "day_night"

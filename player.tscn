@@ -403,7 +403,6 @@ script = ExtResource("2_27fu1")
 [node name="Camera2D" type="Camera2D" parent="."]
 enabled = false
 position_smoothing_enabled = true
-position_smoothing_speed = 8.0
 
 [node name="Label" type="Label" parent="."]
 visible = false

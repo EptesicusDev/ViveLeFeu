@@ -18,8 +18,12 @@ func _ready():
 # The server can restart the level by pressing HOME.
 func _input(event):
 	if(event.is_action("escape") and Input.is_action_just_pressed("escape")):
-		$UI/CanvasLayer/Pause.visible = true
-		$UI/CanvasLayer.visible = true
+		if($UI/CanvasLayer/Pause.visible == false):
+			$UI/CanvasLayer/Pause.visible = true
+			$UI/CanvasLayer.visible = true
+		else:
+			$UI/CanvasLayer/Pause.visible = false
+			$UI/CanvasLayer.visible = false
 	if(event.is_action("player_list") and Input.is_action_just_pressed("player_list")):
 		# TODO update players ping
 		$UI/CanvasLayer/PlayerList.visible = true
@@ -121,8 +125,13 @@ func _on_resume_pressed():
 
 
 func _on_back_pressed():
+	multiplayer.multiplayer_peer.close()
 	get_tree().reload_current_scene()
 
 
 func _on_quit_pressed():
+	get_tree().quit()
+
+
+func _on_quit_2_pressed():
 	get_tree().quit()
