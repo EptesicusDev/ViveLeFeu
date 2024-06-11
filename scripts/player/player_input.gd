@@ -6,13 +6,8 @@ enum PlayerStates {
 	ATTACK,
 }
 
-enum Actions {
-	NONE,
-	PICKUP,
-}
-
 @export var state: PlayerStates = PlayerStates.IDLE
-@export var current_action: Actions = Actions.NONE
+@export var has_action: bool = false
 @export var direction: Vector2 = Vector2.ZERO
 
 
@@ -26,8 +21,8 @@ func attack() -> void:
 
 
 @rpc("call_local")
-func do_action(action: Actions) -> void:
-	current_action = action
+func do_action() -> void:
+	has_action = true
 
 
 func _process(_delta) -> void:
@@ -38,7 +33,7 @@ func _process(_delta) -> void:
 		_: # States that can transition immediately
 			# Pickup
 			if(Input.is_action_just_pressed("action")):
-				do_action.rpc(Actions.PICKUP)
+				do_action.rpc()
 			# Input vector
 			direction = Input.get_vector("left", "right", "up", "down")
 			if(direction):

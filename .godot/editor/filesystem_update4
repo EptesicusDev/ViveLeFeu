@@ -1,4 +1,5 @@
+res://player.tscn
+res://scripts/player/player.gd
 res://multiplayer.tscn
 res://level.tscn
-res://player.tscn
-res://scripts/multiplayer/multiplayer.gd
+res://staff_item.tscn

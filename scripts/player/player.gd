@@ -63,16 +63,18 @@ func _physics_process(delta) -> void:
 
 	move_and_slide()
 	# Other actions
-	match (input.current_action):
-		Actions.PICKUP:
-			if(nearest_staff):
+	if(input.has_action):
+		input.has_action = false # Eat the action once it is done
+		if($Staff.visible): # Player has a staff
+			var staff = preload("res://staff_item.tscn").instantiate()
+			staff.color = $Staff.self_modulate
+			staff.global_position = global_position
+			get_parent().get_parent().add_child(staff)
+			$Staff.visible = false
+		elif(nearest_staff):
 				$Staff.self_modulate = nearest_staff.color
 				$Staff.visible = true
 				nearest_staff.queue_free()
-			input.current_action = Actions.NONE # Eat the action once it is done
-
-		_:
-			pass
 
 
 func _process(_delta):
