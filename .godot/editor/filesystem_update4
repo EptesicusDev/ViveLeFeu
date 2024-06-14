@@ -1,5 +1,5 @@
 res://player.tscn
-res://scripts/player/player.gd
-res://multiplayer.tscn
 res://level.tscn
-res://staff_item.tscn
+res://headlight.tscn
+res://scripts/level/level.gd
+res://world_environment.tscn

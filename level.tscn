@@ -1,8 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://efwjm4hfeqf2"]
+[gd_scene load_steps=10 format=3 uid="uid://efwjm4hfeqf2"]
 
 [ext_resource type="Script" path="res://scripts/level/level.gd" id="1_p4gvl"]
-[ext_resource type="Texture2D" uid="uid://cboqwj1gv3yh2" path="res://assets/world/test_area/area_test.png" id="2_tbf02"]
+[ext_resource type="PackedScene" uid="uid://binm00k088c8f" path="res://headlight.tscn" id="2_612m7"]
+[ext_resource type="Texture2D" uid="uid://dsjsxrjqvfc60" path="res://assets/world/test_area/ground.png" id="3_7ecrc"]
 [ext_resource type="PackedScene" uid="uid://c78mrrt0vvi1u" path="res://staff_item.tscn" id="3_ij2m7"]
+[ext_resource type="Texture2D" uid="uid://snxvk8tqdoip" path="res://assets/world/test_area/truck.png" id="4_k7cb6"]
+[ext_resource type="PackedScene" uid="uid://ci57kqcnucp40" path="res://world_environment.tscn" id="5_e0u3r"]
 
 [sub_resource type="Animation" id="Animation_vqupe"]
 length = 0.001
@@ -48,29 +51,41 @@ script = ExtResource("1_p4gvl")
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="Items" type="Node" parent="."]
+[node name="Collisions" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions"]
+polygon = PackedVector2Array(-116, 4, -134, -10, -134, -40, -116, -55, 128, -55, 128, 4, 10, 4, 18, -42, 36, -42, 36, -52, -117, -52, -117, -42, 1, -42, 9, 4, -43, 4, -43, 7, -103, 7, -103.062, 4)
+
+[node name="Lights" type="Node" parent="."]
+
+[node name="Headlight" parent="Lights" instance=ExtResource("2_612m7")]
+position = Vector2(128, -21)
+
+[node name="Headlight2" parent="Lights" instance=ExtResource("2_612m7")]
+position = Vector2(128, -37)
+
+[node name="Ground" type="Sprite2D" parent="."]
+light_mask = 2
+z_index = -1
+z_as_relative = false
+scale = Vector2(3, 3)
+texture = ExtResource("3_7ecrc")
+
+[node name="Env" type="Sprite2D" parent="."]
+position = Vector2(-3, -24)
+texture = ExtResource("4_k7cb6")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://player.tscn")
 spawn_path = NodePath("../Players")
 spawn_limit = 4
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-z_index = -1
-texture = ExtResource("2_tbf02")
-
-[node name="Collisions" type="StaticBody2D" parent="."]
-collision_mask = 0
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions"]
-polygon = PackedVector2Array(-116, 4, -134, -10, -134, -40, -116, -55, 128, -55, 128, 4, 10, 4, 18, -42, 36, -42, 36, -52, -117, -52, -117, -42, 1, -42, 9, 4)
-
 [node name="StaffItem" parent="." instance=ExtResource("3_ij2m7")]
 position = Vector2(148, 69)
 color = Color(1, 1, 1, 1)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-visible = false
 color = Color(0.133333, 0.141176, 0.258824, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasModulate"]
@@ -78,3 +93,5 @@ libraries = {
 "": SubResource("AnimationLibrary_gxbli")
 }
 autoplay = "day_night"
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("5_e0u3r")]

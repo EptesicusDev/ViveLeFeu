@@ -6,7 +6,6 @@ func _ready():
 	# We only need to spawn players on the server.
 	if not multiplayer.is_server():
 		return
-
 	multiplayer.peer_connected.connect(add_player)
 	multiplayer.peer_disconnected.connect(del_player)
 
