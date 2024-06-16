@@ -6,7 +6,7 @@
 
 [node name="Light" type="PointLight2D" parent="."]
 color = Color(1, 0.709804, 0.443137, 0.87451)
-energy = 0.3
+energy = 3.69
 texture = ExtResource("1_g8crk")
 offset = Vector2(88, 0)
 

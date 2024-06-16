@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://j3l56vj0qgmo"]
+
+[ext_resource type="Script" path="res://scripts/ambience/ambience.gd" id="1_glrpl"]
+
+[sub_resource type="Animation" id="Animation_vqupe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.133333, 0.141176, 0.258824, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mbcnn"]
+resource_name = "day_night"
+length = 180.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 35.1, 90.1, 150.1, 180),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.133333, 0.141176, 0.258824, 1), Color(0.964706, 0.682353, 0.627451, 1), Color(1, 1, 1, 1), Color(1, 0.247059, 0.282353, 1), Color(0.133333, 0.141176, 0.258824, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gxbli"]
+_data = {
+"RESET": SubResource("Animation_vqupe"),
+"day_night": SubResource("Animation_mbcnn")
+}
+
+[node name="Ambience" type="CanvasModulate"]
+color = Color(0.133333, 0.141176, 0.258824, 1)
+script = ExtResource("1_glrpl")
+day_night_cycle = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_gxbli")
+}
+autoplay = "RESET"

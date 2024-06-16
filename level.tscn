@@ -1,49 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://efwjm4hfeqf2"]
+[gd_scene load_steps=9 format=3 uid="uid://efwjm4hfeqf2"]
 
 [ext_resource type="Script" path="res://scripts/level/level.gd" id="1_p4gvl"]
 [ext_resource type="PackedScene" uid="uid://binm00k088c8f" path="res://headlight.tscn" id="2_612m7"]
 [ext_resource type="Texture2D" uid="uid://dsjsxrjqvfc60" path="res://assets/world/test_area/ground.png" id="3_7ecrc"]
 [ext_resource type="PackedScene" uid="uid://c78mrrt0vvi1u" path="res://staff_item.tscn" id="3_ij2m7"]
-[ext_resource type="Texture2D" uid="uid://snxvk8tqdoip" path="res://assets/world/test_area/truck.png" id="4_k7cb6"]
+[ext_resource type="PackedScene" uid="uid://c4vvo6w46p806" path="res://fire.tscn" id="3_uy6cc"]
+[ext_resource type="Texture2D" uid="uid://bwohi3w8hnuht" path="res://assets/world/test_area/area_test2.png" id="4_g4ree"]
 [ext_resource type="PackedScene" uid="uid://ci57kqcnucp40" path="res://world_environment.tscn" id="5_e0u3r"]
-
-[sub_resource type="Animation" id="Animation_vqupe"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.133333, 0.141176, 0.258824, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_mbcnn"]
-resource_name = "day_night"
-length = 180.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 35.1, 90.1, 150.1, 180),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Color(0.133333, 0.141176, 0.258824, 1), Color(0.964706, 0.682353, 0.627451, 1), Color(1, 1, 1, 1), Color(1, 0.247059, 0.282353, 1), Color(0.133333, 0.141176, 0.258824, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_gxbli"]
-_data = {
-"RESET": SubResource("Animation_vqupe"),
-"day_night": SubResource("Animation_mbcnn")
-}
+[ext_resource type="PackedScene" uid="uid://j3l56vj0qgmo" path="res://ambience.tscn" id="6_w0b6h"]
 
 [node name="World" type="Node"]
 script = ExtResource("1_p4gvl")
@@ -57,13 +21,17 @@ collision_mask = 0
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions"]
 polygon = PackedVector2Array(-116, 4, -134, -10, -134, -40, -116, -55, 128, -55, 128, 4, 10, 4, 18, -42, 36, -42, 36, -52, -117, -52, -117, -42, 1, -42, 9, 4, -43, 4, -43, 7, -103, 7, -103.062, 4)
 
-[node name="Lights" type="Node" parent="."]
+[node name="Lights" type="Node2D" parent="."]
+y_sort_enabled = true
 
 [node name="Headlight" parent="Lights" instance=ExtResource("2_612m7")]
 position = Vector2(128, -21)
 
 [node name="Headlight2" parent="Lights" instance=ExtResource("2_612m7")]
 position = Vector2(128, -37)
+
+[node name="Fire" parent="Lights" instance=ExtResource("3_uy6cc")]
+position = Vector2(-7, 114)
 
 [node name="Ground" type="Sprite2D" parent="."]
 light_mask = 2
@@ -73,8 +41,10 @@ scale = Vector2(3, 3)
 texture = ExtResource("3_7ecrc")
 
 [node name="Env" type="Sprite2D" parent="."]
+z_index = -1
 position = Vector2(-3, -24)
-texture = ExtResource("4_k7cb6")
+texture = ExtResource("4_g4ree")
+offset = Vector2(0, 61)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://player.tscn")
@@ -83,15 +53,9 @@ spawn_limit = 4
 
 [node name="StaffItem" parent="." instance=ExtResource("3_ij2m7")]
 position = Vector2(148, 69)
+rotation = -1.5708
 color = Color(1, 1, 1, 1)
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.133333, 0.141176, 0.258824, 1)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasModulate"]
-libraries = {
-"": SubResource("AnimationLibrary_gxbli")
-}
-autoplay = "day_night"
+[node name="Ambience" parent="." instance=ExtResource("6_w0b6h")]
 
 [node name="WorldEnvironment" parent="." instance=ExtResource("5_e0u3r")]

@@ -377,7 +377,7 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(-80.974, 0)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_vrp0r"]
-polygon = PackedVector2Array(-4, 2, 4, 2, 5, 0, 4, -2, -4, -2, -5, -0.0172548)
+polygon = PackedVector2Array(-2, 2, 2, 2, 3, 0, 2, -2, -2, -2, -3, 0)
 
 [node name="Player" type="CharacterBody2D"]
 z_index = 2
