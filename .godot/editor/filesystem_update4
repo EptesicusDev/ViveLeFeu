@@ -1,5 +1,1 @@
-res://level.tscn
-res://ambience.tscn
-res://scripts/ambience/ambience.gd
-res://fire.tscn
-res://headlight.tscn
+res://multiplayer.tscn
