@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgq3g3rcjdkui"]
+
+[ext_resource type="Texture2D" uid="uid://dsbxao3njth67" path="res://assets/wheel/wheel.png" id="1_byupi"]
+[ext_resource type="Script" path="res://scripts/wheel/wheel.gd" id="2_2qwl4"]
+
+[node name="Wheel" type="Sprite2D"]
+texture = ExtResource("1_byupi")
+hframes = 5
+vframes = 3
+frame = 4
+script = ExtResource("2_2qwl4")

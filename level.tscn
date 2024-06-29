@@ -1,54 +1,59 @@
-[gd_scene load_steps=9 format=3 uid="uid://efwjm4hfeqf2"]
+[gd_scene load_steps=10 format=3 uid="uid://efwjm4hfeqf2"]
 
 [ext_resource type="Script" path="res://scripts/level/level.gd" id="1_p4gvl"]
-[ext_resource type="PackedScene" uid="uid://binm00k088c8f" path="res://headlight.tscn" id="2_612m7"]
 [ext_resource type="Texture2D" uid="uid://dsjsxrjqvfc60" path="res://assets/world/test_area/ground.png" id="3_7ecrc"]
 [ext_resource type="PackedScene" uid="uid://c78mrrt0vvi1u" path="res://staff_item.tscn" id="3_ij2m7"]
 [ext_resource type="PackedScene" uid="uid://c4vvo6w46p806" path="res://fire.tscn" id="3_uy6cc"]
-[ext_resource type="Texture2D" uid="uid://bwohi3w8hnuht" path="res://assets/world/test_area/area_test2.png" id="4_g4ree"]
 [ext_resource type="PackedScene" uid="uid://ci57kqcnucp40" path="res://world_environment.tscn" id="5_e0u3r"]
+[ext_resource type="Texture2D" uid="uid://bx47vkiowttlp" path="res://assets/world/test_area/area_test3.png" id="5_fi55n"]
 [ext_resource type="PackedScene" uid="uid://j3l56vj0qgmo" path="res://ambience.tscn" id="6_w0b6h"]
+[ext_resource type="PackedScene" uid="uid://bficv2vb04vbc" path="res://truck.tscn" id="8_wygwl"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_sigc5"]
+polygon = PackedVector2Array(-36, 66, 2, 66, 2, 60, 3, 60, 5, 57, 5, 52, -38, 52, -38, 60, -36, 60)
 
 [node name="World" type="Node"]
 script = ExtResource("1_p4gvl")
 
-[node name="Players" type="Node2D" parent="."]
+[node name="YSort" type="Node2D" parent="."]
 y_sort_enabled = true
+
+[node name="Players" type="Node2D" parent="YSort"]
+y_sort_enabled = true
+
+[node name="Truck" parent="YSort" instance=ExtResource("8_wygwl")]
+position = Vector2(231, 1)
 
 [node name="Collisions" type="StaticBody2D" parent="."]
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions"]
-polygon = PackedVector2Array(-116, 4, -134, -10, -134, -40, -116, -55, 128, -55, 128, 4, 10, 4, 18, -42, 36, -42, 36, -52, -117, -52, -117, -42, 1, -42, 9, 4, -43, 4, -43, 7, -103, 7, -103.062, 4)
-
 [node name="Lights" type="Node2D" parent="."]
 y_sort_enabled = true
-
-[node name="Headlight" parent="Lights" instance=ExtResource("2_612m7")]
-position = Vector2(128, -21)
-
-[node name="Headlight2" parent="Lights" instance=ExtResource("2_612m7")]
-position = Vector2(128, -37)
 
 [node name="Fire" parent="Lights" instance=ExtResource("3_uy6cc")]
 position = Vector2(-7, 114)
 
+[node name="Occluders" type="Node2D" parent="."]
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Occluders"]
+occluder = SubResource("OccluderPolygon2D_sigc5")
+
 [node name="Ground" type="Sprite2D" parent="."]
 light_mask = 2
-z_index = -1
+z_index = -2
 z_as_relative = false
 scale = Vector2(3, 3)
 texture = ExtResource("3_7ecrc")
 
 [node name="Env" type="Sprite2D" parent="."]
 z_index = -1
-position = Vector2(-3, -24)
-texture = ExtResource("4_g4ree")
+position = Vector2(20, 1)
+texture = ExtResource("5_fi55n")
 offset = Vector2(0, 61)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://player.tscn")
-spawn_path = NodePath("../Players")
+spawn_path = NodePath("../YSort/Players")
 spawn_limit = 4
 
 [node name="StaffItem" parent="." instance=ExtResource("3_ij2m7")]

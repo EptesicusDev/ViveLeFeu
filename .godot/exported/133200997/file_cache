@@ -1,5 +1,8 @@
-res://level.tscn::a5bf898c474031e826d725eb5a0576a3::1716822784::res://.godot/exported/133200997/export-d85448a68f01bbd6644b4b40ef87233e-level.scn
-res://multiplayer.tscn::a177d317ab6a968e979e706a6a3814cf::1716756026::res://.godot/exported/133200997/export-c0a6fb2ae0b5ca861fbcc035f2e73333-multiplayer.scn
-res://player.tscn::e695645667e9c744fa6777a6054ff250::1716794507::res://.godot/exported/133200997/export-36a25e342948d0ceacc500772b5412b3-player.scn
-res://sphere.tscn::d27ea5d39ea4b69093373e442f3f71d9::1715535706::res://.godot/exported/133200997/export-061b3120f33bb556bd93cb7c3c990758-sphere.scn
-res://staff_item.tscn::582b100a62c66dcd0ac7c02078d492dc::1716794507::res://.godot/exported/133200997/export-4cbd18e9ec129dc41a1b11c26b6c3b10-staff_item.scn
+res://level.tscn::7e0552e0534433909857a4a0860d7465::1718704765::res://.godot/exported/133200997/export-d85448a68f01bbd6644b4b40ef87233e-level.scn
+res://multiplayer.tscn::903ec27fed4534c086a13700d1390f32::1718845130::res://.godot/exported/133200997/export-c0a6fb2ae0b5ca861fbcc035f2e73333-multiplayer.scn
+res://player.tscn::679adf8d9fff7d993898f3acad36cb5f::1718704765::res://.godot/exported/133200997/export-36a25e342948d0ceacc500772b5412b3-player.scn
+res://staff_item.tscn::dcb74f0bf7eca85d682ec8683ee8f4eb::1718704133::res://.godot/exported/133200997/export-4cbd18e9ec129dc41a1b11c26b6c3b10-staff_item.scn
+res://ambience.tscn::71dfec888cd7ae26055c4915ded410b8::1718845130::res://.godot/exported/133200997/export-902222a4386c66c0efababdf7eae2c98-ambience.scn
+res://fire.tscn::c73abdfe9490f656d726517bfab56153::1718704765::res://.godot/exported/133200997/export-26355f6214f638a77b31495271d703a5-fire.scn
+res://headlight.tscn::e9f1c7035390781bdb47b7eb9d24a3db::1718704765::res://.godot/exported/133200997/export-27b0bc762648c2c55f2b20abc48fd991-headlight.scn
+res://world_environment.tscn::8ac87c34a1e018a7744659621436ed14::1718704133::res://.godot/exported/133200997/export-31671dd0fc9a71be40e2ba2cd1e192cc-world_environment.scn

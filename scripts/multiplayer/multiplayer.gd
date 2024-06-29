@@ -3,6 +3,7 @@ extends Node
 const PORT = 4433
 
 func _ready():
+	$UI/Net/Name.grab_focus()
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.peer_disconnected.connect(peer_disconnected_func)
 	# Start paused
@@ -20,17 +21,17 @@ func _input(event):
 	if(event.is_action("escape") and Input.is_action_just_pressed("escape")):
 		if($UI/CanvasLayer/Pause.visible == false):
 			$UI/CanvasLayer/Pause.visible = true
-			$UI/CanvasLayer.visible = true
+			$UI/CanvasLayer/DarkFilter.visible = true
 		else:
 			$UI/CanvasLayer/Pause.visible = false
-			$UI/CanvasLayer.visible = false
+			$UI/CanvasLayer/DarkFilter.visible = false
 	if(event.is_action("player_list") and Input.is_action_just_pressed("player_list")):
 		# TODO update players ping
 		$UI/CanvasLayer/PlayerList.visible = true
-		$UI/CanvasLayer.visible = true
+		$UI/CanvasLayer/DarkFilter.visible = true
 	if(event.is_action("player_list") and Input.is_action_just_released("player_list")):
 		$UI/CanvasLayer/PlayerList.visible = false
-		$UI/CanvasLayer.visible = false
+		$UI/CanvasLayer/DarkFilter.visible = false
 	# Only host can trigger what is bellow this
 	if(not multiplayer.is_server()):
 		return
@@ -121,7 +122,7 @@ func peer_disconnected_func(id):
 
 func _on_resume_pressed():
 	$UI/CanvasLayer/Pause.visible = false
-	$UI/CanvasLayer.visible = false
+	$UI/CanvasLayer/DarkFilter.visible = false
 
 
 func _on_back_pressed():

@@ -33,10 +33,10 @@ func add_player(id: int):
 	var pos := Vector2.from_angle(randf() * 2 * PI)
 	character.position = Vector2(pos.x * SPAWN_RANDOM * randf(), 30 + pos.y * SPAWN_RANDOM * randf())
 	character.name = str(id)
-	$Players.add_child(character, true)
+	$YSort/Players.add_child(character, true)
 
 
 func del_player(id: int):
-	if not $Players.has_node(str(id)):
+	if not $YSort/Players.has_node(str(id)):
 		return
-	$Players.get_node(str(id)).queue_free()
+	$YSort/Players.get_node(str(id)).queue_free()

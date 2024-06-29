@@ -1,0 +1,105 @@
+[gd_scene load_steps=14 format=3 uid="uid://bficv2vb04vbc"]
+
+[ext_resource type="PackedScene" uid="uid://binm00k088c8f" path="res://headlight.tscn" id="1_eicwj"]
+[ext_resource type="Script" path="res://scripts/truc/truck.gd" id="1_jvwuj"]
+[ext_resource type="Texture2D" uid="uid://c3grvddad6sx3" path="res://assets/truck/truck_shadow.png" id="2_j61mo"]
+[ext_resource type="PackedScene" uid="uid://cgq3g3rcjdkui" path="res://wheel.tscn" id="3_tpian"]
+[ext_resource type="Texture2D" uid="uid://ck1qomiih57cn" path="res://assets/truck/truck.png" id="4_h0dey"]
+[ext_resource type="Texture2D" uid="uid://bfx5tlc3o6tfx" path="res://assets/truck/truck_door.png" id="6_nm1s6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x323p"]
+size = Vector2(262, 38)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ebtjw"]
+radius = 12.0416
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_io0xl"]
+atlas = ExtResource("6_nm1s6")
+region = Rect2(0, 0, 262, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lmff1"]
+atlas = ExtResource("6_nm1s6")
+region = Rect2(262, 0, 262, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rb1l5"]
+atlas = ExtResource("6_nm1s6")
+region = Rect2(0, 63, 262, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3olmt"]
+atlas = ExtResource("6_nm1s6")
+region = Rect2(262, 63, 262, 63)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ulh8x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_io0xl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lmff1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rb1l5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3olmt")
+}],
+"loop": false,
+"name": &"open",
+"speed": 18.0
+}]
+
+[node name="Truck" type="CharacterBody2D"]
+y_sort_enabled = true
+script = ExtResource("1_jvwuj")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+z_index = -1
+z_as_relative = false
+texture = ExtResource("2_j61mo")
+
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_x323p")
+
+[node name="Lights" type="Node2D" parent="."]
+
+[node name="Headlight" parent="Lights" instance=ExtResource("1_eicwj")]
+position = Vector2(131, 9)
+
+[node name="Headlight2" parent="Lights" instance=ExtResource("1_eicwj")]
+position = Vector2(131, -8)
+
+[node name="Body" type="Sprite2D" parent="."]
+z_as_relative = false
+texture = ExtResource("4_h0dey")
+
+[node name="Wheels" type="Node2D" parent="."]
+
+[node name="Wheel" parent="Wheels" node_paths=PackedStringArray("parent_vehicule") instance=ExtResource("3_tpian")]
+position = Vector2(110, 20)
+parent_vehicule = NodePath("../..")
+
+[node name="Wheel2" parent="Wheels" node_paths=PackedStringArray("parent_vehicule") instance=ExtResource("3_tpian")]
+position = Vector2(-89, 20)
+parent_vehicule = NodePath("../..")
+
+[node name="Door" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door"]
+position = Vector2(118, 27)
+shape = SubResource("CircleShape2D_ebtjw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Door"]
+z_index = 1
+z_as_relative = false
+sprite_frames = SubResource("SpriteFrames_ulh8x")
+animation = &"open"
+
+[node name="DriverSeat" type="Node2D" parent="."]
+position = Vector2(116, -19)
+
+[connection signal="body_entered" from="Door" to="." method="_on_door_body_entered"]
+[connection signal="body_exited" from="Door" to="." method="_on_door_body_exited"]

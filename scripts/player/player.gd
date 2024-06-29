@@ -101,8 +101,16 @@ func update_animation_tree_keyboard(vector: Vector2) -> void:
 func _on_collision_scanner_body_entered(body):
 	if(body is Staff):
 		nearest_staff = body
+		Stack.row = {
+			"id" = str(body.get_instance_id()),
+			"text" = "Pick staff",
+		}
 
 
 func _on_collision_scanner_body_exited(body):
 	if(body == nearest_staff):
 		nearest_staff = null
+		Stack.row = {
+			"id" = str(body.get_instance_id()),
+			"text" = "",
+		}

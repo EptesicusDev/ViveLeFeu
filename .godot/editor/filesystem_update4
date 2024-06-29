@@ -1,1 +1,11 @@
+res://truck.tscn
+res://level.tscn
+res://scripts/truc/truck.gd
+res://scripts/level/level.gd
+res://player.tscn
+res://scripts/wheel/wheel.gd
+res://scripts/staff_item/staff_item.gd
 res://multiplayer.tscn
+res://scripts/multiplayer/multiplayer.gd
+res://scripts/ui/stack/stack.gd
+res://scripts/player/player.gd
